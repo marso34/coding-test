@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Main {
     // strike인지 확인
-    public static int checkStrike(int num1, int num2) {
+    public static int cntStrike(int num1, int num2) {
         int n1 = num1 / 100;
         int n2 = num1 % 100 / 10;
         int n3 = num1 % 10;
@@ -25,7 +25,7 @@ public class Main {
     }
 
     // ball인지 확인
-    public static int checkBall(int num1, int num2) {
+    public static int cntBall(int num1, int num2) {
         int n1 = num1 / 100;
         int n2 = num1 % 100 / 10;
         int n3 = num1 % 10;
@@ -78,8 +78,8 @@ public class Main {
             for (int c = cases.size() - 1; c >= 0; c--) {
                 int num = cases.get(c);
 
-                int tStrike = checkStrike(input, num);
-                int tBall = checkBall(input, num);
+                int tStrike = cntStrike(input, num);
+                int tBall = cntBall(input, num);
 
                 if (tStrike != strike || tBall != ball) {
                     cases.remove(new Integer(num));
