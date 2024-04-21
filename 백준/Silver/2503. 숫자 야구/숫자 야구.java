@@ -75,16 +75,25 @@ public class Main {
             int ball = Integer.parseInt(st.nextToken());
 
             // 모든 경우의 수에서 input이 strike, ball이 가능한 모든 조건을 필터링
-            for (int c = cases.size() - 1; c >= 0; c--) {
-                int num = cases.get(c);
+            // case 1:
+            // for (int c = cases.size() - 1; c >= 0; c--) {
+            //     int num = cases.get(c);
 
+            //     int tStrike = cntStrike(input, num);
+            //     int tBall = cntBall(input, num);
+
+            //     if (tStrike != strike || tBall != ball) {
+            //         cases.remove(new Integer(num));
+            //     }
+            // }
+
+            // case 2:
+            cases.removeIf(num -> {
                 int tStrike = cntStrike(input, num);
                 int tBall = cntBall(input, num);
 
-                if (tStrike != strike || tBall != ball) {
-                    cases.remove(new Integer(num));
-                }
-            }
+                return tStrike != strike || tBall != ball; // 조건에 맞지 않는 경우 삭제
+            });
         }
 
         System.out.println(cases.size());
