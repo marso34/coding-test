@@ -8,15 +8,15 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int n = Integer.parseInt(br.readLine());
-        int[] arr = new int[n];
+        long[] arr = new long[n];
 
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         for (int i = 0; i < n; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
+            arr[i] = Long.parseLong(st.nextToken());
         } // 여기까지 입력
 
-        int max = 0;
+        long max = 0;
 
         // i, j 벌 위치 
         for(int i = 0; i < n-1; i++) {
@@ -26,7 +26,12 @@ public class Main {
                     if (i == k || j == k) {
                         continue;
                     }
-
+                    
+                    // 모든 인덱스를 활용하지 않을 경우
+                    if (!(i == 0 && k == n-1) && !(k == 0 && j == n-1) && !(i == 0 && j == n-1)) {
+                        continue;
+                    }
+                    
                     /**
                      * 꿀 양 계산
                      * 
@@ -35,7 +40,7 @@ public class Main {
                     int index1 = i; 
                     int index2 = j;
                     
-                    int sum = 2* arr[k] - arr[i] - arr[j]; // 2 * 도착지점 - (두 출발 지점)
+                    long sum = 2* arr[k] - arr[i] - arr[j]; // 2 * 도착지점 - (두 출발 지점)
 
                     // 출발지점부터 도착지점 이전 까지 sum
                     // 원래 목표: 출발지 제외 도착지점까지 sum
