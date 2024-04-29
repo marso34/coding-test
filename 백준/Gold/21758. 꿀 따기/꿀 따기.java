@@ -17,68 +17,51 @@ public class Main {
         } // 여기까지 입력
 
         long max = 0;
-        
+
         /**
-         * i, j는 벌, k는 벌통 (i, j는 순서 상관 X) * i, j 값은 연산에서 제거
+         * 
+         * 배열의 누접합으로로 계산
          * 
          * i 왼쪽 고정 => j 오른쪽 고정 => k 선택
          * i 왼쪽 고정 => k 오른쪽 고정 => j 선택
          * k 왼쪽 고정 => j 오른쪽 고정 => i 선택
          * 
-         */  
-        for (int index = 1; index < n-1; index++) {
-            long sum = 0;
+         */
+        long[] left = new long[n];
+        long[] right = new long[n];
 
+        left[0] = arr[0];       // 오름차순 
+        right[n-1] = arr[n-1];  // 내림차순 
+
+        for (int i = 1; i < n; i++) {
+            left[i] = left[i-1] + arr[i];
+            right[n-i-1] = right[n-i] + arr[n-i-1];
+        }
+
+        for (int index = 1; index < n-1; index++) {
             // index가 k일 경우
             // 1 ~ k   합
-            // k ~ n-1 합
-            sum += arr[index]; // k값 중복
-
-            for (int i = 1; i < n-1; i++) {
-                sum += arr[i];
-            }
-
-            if (sum > max) {
-                max = sum;
-            }
+            // n-1 ~ k 합
+            long sum1 = left[index] - arr[0] + right[index] - arr[n-1];
 
             // index가 j일 경우
             // 1 ~ n 합-j
             // j+1 ~ n 합
-            sum = 0;
-
-            for (int i = 1; i < n; i++) {
-                if (i == index) { // j 값 제거
-                    continue;
-                } else if (i > index) { // j+1 ~ n
-                    sum += arr[i];
-                }
-
-                sum += arr[i];
-            }
-
-            if (sum > max) {
-                max = sum;
-            }
+            long sum2 = left[n-1] - arr[0] - arr[index] + left[n-1] - left[index];         
 
             // index가 i일 경우
-            // 0 ~ i-1 합
-            // 0 ~ n-1 합-i
-            sum = 0;
+            // i-1 ~ 0 합
+            // n-2 ~ 0 합-i
+            long sum3 = right[0] - right[index] + right[0] - arr[n-1] - arr[index];
 
-            for (int i = 0; i < n-1; i++) {
-                if (i == index) { // j 값 제거
-                    continue;
-                } else if (i < index) { // j+1 ~ n
-                    sum += arr[i];
-                }
+            if (sum1 > max) 
+                max = sum1;
 
-                sum += arr[i];
-            }
+            if (sum2 > max)
+                max = sum2;
             
-            if (sum > max) {
-                max = sum;
-            }
+            if (sum3 > max)
+                max = sum3;
         }
 
         System.out.println(max);
