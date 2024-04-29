@@ -17,58 +17,70 @@ public class Main {
         } // 여기까지 입력
 
         long max = 0;
+        
+        /**
+         * i, j는 벌, k는 벌통 (i, j는 순서 상관 X) * i, j 값은 연산에서 제거
+         * 
+         * i 왼쪽 고정 => j 오른쪽 고정 => k 선택
+         * i 왼쪽 고정 => k 오른쪽 고정 => j 선택
+         * k 왼쪽 고정 => j 오른쪽 고정 => i 선택
+         * 
+         */  
+        for (int index = 1; index < n-1; index++) {
+            long sum = 0;
 
-        // i, j 벌 위치 
-        for(int i = 0; i < n-1; i++) {
-            for(int j = i+1; j < n; j++) {
-                // 벌통 장소
-                for (int k = 0; k < n; k++) { 
-                    if (i == k || j == k) {
-                        continue;
-                    }
-                    
-                    // 모든 인덱스를 활용하지 않을 경우
-                    if (!(i == 0 && k == n-1) && !(k == 0 && j == n-1) && !(i == 0 && j == n-1)) {
-                        continue;
-                    }
-                    
-                    /**
-                     * 꿀 양 계산
-                     * 
-                     * i ~ k까지 꿀 + j ~ k까지 꿀 
-                     */
-                    int index1 = i; 
-                    int index2 = j;
-                    
-                    long sum = 2* arr[k] - arr[i] - arr[j]; // 2 * 도착지점 - (두 출발 지점)
+            // index가 k일 경우
+            // 1 ~ k   합
+            // k ~ n-1 합
+            sum += arr[index]; // k값 중복
 
-                    // 출발지점부터 도착지점 이전 까지 sum
-                    // 원래 목표: 출발지 제외 도착지점까지 sum
-                    while (index1 != k || index2 != k) {
-                        if (index1 != k) {
-                            if (index1 != j) {
-                                sum += arr[index1];
-                            }
-                            
-                            index1 = (i > k) ? index1-1 : index1+1;
-                        }
+            for (int i = 1; i < n-1; i++) {
+                sum += arr[i];
+            }
 
-                        if (index2 != k) {
-                            if (index2 != i) {
-                                sum += arr[index2];
-                            }
-                            
-                            index2 = (j > k) ? index2-1 : index2+1;
-                        }
-                    }
-                    
-                    if (sum > max) {
-                        max = sum;
-                    } 
+            if (sum > max) {
+                max = sum;
+            }
+
+            // index가 j일 경우
+            // 1 ~ n 합-j
+            // j+1 ~ n 합
+            sum = 0;
+
+            for (int i = 1; i < n; i++) {
+                if (i == index) { // j 값 제거
+                    continue;
+                } else if (i > index) { // j+1 ~ n
+                    sum += arr[i];
                 }
+
+                sum += arr[i];
+            }
+
+            if (sum > max) {
+                max = sum;
+            }
+
+            // index가 i일 경우
+            // 0 ~ i-1 합
+            // 0 ~ n-1 합-i
+            sum = 0;
+
+            for (int i = 0; i < n-1; i++) {
+                if (i == index) { // j 값 제거
+                    continue;
+                } else if (i < index) { // j+1 ~ n
+                    sum += arr[i];
+                }
+
+                sum += arr[i];
+            }
+            
+            if (sum > max) {
+                max = sum;
             }
         }
-        
+
         System.out.println(max);
     } 
 }
