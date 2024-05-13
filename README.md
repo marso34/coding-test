@@ -1,2 +1,2 @@
-# boj_solved
-This is an auto push repository for Baekjoon Online Judge created with [BaekjoonHub](https://github.com/BaekjoonHub/BaekjoonHub).
+# coding-test
+This is an auto push repository for Coding Test created with [BaekjoonHub](https://github.com/BaekjoonHub/BaekjoonHub).
